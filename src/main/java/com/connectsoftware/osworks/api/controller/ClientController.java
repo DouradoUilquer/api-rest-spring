@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.connectsoftware.osworks.domain.model.Client;
 import com.connectsoftware.osworks.domain.repository.ClientRepository;
+import com.connectsoftware.osworks.domain.service.ClientService;
 
 @RestController
 @RequestMapping("/client")
@@ -27,11 +28,16 @@ public class ClientController {
 
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private ClientService clientService;
+	
+	
 
 	@GetMapping
 	public List<Client> list() {
 		return clientRepository.findAll();
-		// return clienteRepository.findByName("jose");
+		
 	}
 
 	@GetMapping("/{id}")
@@ -47,7 +53,7 @@ public class ClientController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Client insert(@Valid @RequestBody Client client) {
-		return clientRepository.save(client);
+		return clientService.insert(client);
 	}
 	
 	@PutMapping("/{id}")
@@ -56,7 +62,7 @@ public class ClientController {
 			return ResponseEntity.notFound().build();
 		}
 		client.setId(id);
-		client = clientRepository.save(client);
+		client = clientService.insert(client);
 		
 		return ResponseEntity.ok(client);
 	}
@@ -67,7 +73,7 @@ public class ClientController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		clientRepository.deleteById(id);
+		clientService.delete(id);
 		
 		return ResponseEntity.noContent().build();
 	}

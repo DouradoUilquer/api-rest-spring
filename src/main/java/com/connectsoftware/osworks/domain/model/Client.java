@@ -22,7 +22,7 @@ public class Client implements Serializable {
 	private Long id;
 	
 	@NotBlank
-	@Size(max = 10)
+	@Size(max = 120)
 	private String name;
 	@NotBlank
 	@Email
