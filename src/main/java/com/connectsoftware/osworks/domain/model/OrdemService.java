@@ -2,7 +2,7 @@ package com.connectsoftware.osworks.domain.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,6 +11,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
+
+import com.connectsoftware.osworks.domain.ValidationGroups;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.sun.istack.NotNull;
 
 @Entity
 public class OrdemService implements Serializable {
@@ -20,62 +29,84 @@ public class OrdemService implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
+	@Valid
+	@ConvertGroup(from = Default.class  , to = ValidationGroups.ClientId.class)
+	@NotNull
 	@ManyToOne
 	private Client client;
+
+	@NotBlank
 	private String description;
+
+	@NotNull
 	private BigDecimal price;
-	
+
 	@Enumerated(EnumType.STRING)
 	private StatusOrdemService status;
-	private LocalDateTime dateOpen;
-	private LocalDateTime dateFinished;
-	
-	
-	
-	
+
+	@JsonProperty(access = Access.READ_ONLY)
+	private OffsetDateTime dateOpen;
+
+	@JsonProperty(access = Access.READ_ONLY)
+	private OffsetDateTime dateFinished;
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public Client getClient() {
 		return client;
 	}
+
 	public void setClient(Client client) {
 		this.client = client;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	public BigDecimal getPrice() {
 		return price;
 	}
+
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
+
 	public StatusOrdemService getStatus() {
 		return status;
 	}
+
 	public void setStatus(StatusOrdemService status) {
 		this.status = status;
 	}
-	public LocalDateTime getDateOpen() {
+
+	public OffsetDateTime getDateOpen() {
 		return dateOpen;
 	}
-	public void setDateOpen(LocalDateTime dateOpen) {
+
+	public void setDateOpen(OffsetDateTime dateOpen) {
 		this.dateOpen = dateOpen;
 	}
-	public LocalDateTime getDateFinished() {
+
+	public OffsetDateTime getDateFinished() {
 		return dateFinished;
 	}
-	public void setDateFinished(LocalDateTime dateFinished) {
+
+	public void setDateFinished(OffsetDateTime dateFinished) {
 		this.dateFinished = dateFinished;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -83,6 +114,7 @@ public class OrdemService implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -99,9 +131,5 @@ public class OrdemService implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
+
 }

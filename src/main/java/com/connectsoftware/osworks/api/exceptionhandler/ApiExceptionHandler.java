@@ -1,6 +1,6 @@
 package com.connectsoftware.osworks.api.exceptionhandler;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
 import org.springframework.http.HttpHeaders;
@@ -26,7 +26,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		var problem = new Problem();
 		problem.setStatus(status.value());
 		problem.setTitle(ex.getMessage());
-		problem.setData(LocalDateTime.now());
+		problem.setData(OffsetDateTime.now());
 
 		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 
@@ -47,7 +47,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		var problem = new Problem();
 		problem.setStatus(status.value());
 		problem.setTitle("CAMPOS INVALIDOS");
-		problem.setData(LocalDateTime.now());
+		problem.setData(OffsetDateTime.now());
 		problem.setCamp(camp);
 
 		return super.handleExceptionInternal(ex, problem, headers, status, request);

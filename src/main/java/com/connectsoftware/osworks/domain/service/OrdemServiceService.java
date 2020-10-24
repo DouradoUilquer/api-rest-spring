@@ -1,6 +1,6 @@
 package com.connectsoftware.osworks.domain.service;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class OrdemServiceService {
 
 		ordem.setClient(client);
 		ordem.setStatus(StatusOrdemService.OPEN);
-		ordem.setDateOpen(LocalDateTime.now());
+		ordem.setDateOpen(OffsetDateTime.now());
 		return ordemServiceRepository.save(ordem);
 	}
 

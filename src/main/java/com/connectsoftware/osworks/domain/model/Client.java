@@ -9,7 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.connectsoftware.osworks.domain.ValidationGroups;
 
 @Entity
 @Table(name = "client")
@@ -17,6 +20,7 @@ public class Client implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@NotNull(groups = ValidationGroups.ClientId.class )
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
